@@ -1,0 +1,126 @@
+1. How many Customers do we have in the data? 
+
+	SELECT COUNT(customer_id) 
+	FROM customers
+2. What was the city with the most profit for the company in 2015 and how much was it?
+
+	SELECT shipping_city, SUM(order_profits)
+	FROM orders
+	JOIN order_details ON orders.order_id = order_details.order_id
+	WHERE order_date LIKE '%2015'
+	GROUP BY shipping_city
+	ORDER BY SUM(order_profits) DESC
+	LIMIT 1
+
+3. How many different cities do we have in the data?
+
+	SELECT COUNT(DISTINCT shipping_city)
+	FROM orders
+
+4. Show the total spent by customers from low to high.
+
+	SELECT customers.customer_id, SUM(order_sales) umsatz
+	FROM customers
+	JOIN orders ON customers.customer_id = orders.customer_id
+	JOIN order_details ON orders.order_id = order_details.order_id
+	GROUP BY customers.customer_id
+	ORDER BY umsatz
+	LIMIT 5
+
+5. What is the most profitable City in the State of Tennessee?
+
+	SELECT shipping_city, SUM(order_profits)
+	FROM orders
+	JOIN order_details ON orders.order_id = order_details.order_id
+	WHERE shipping_state LIKE 'Tennessee'
+	GROUP BY shipping_city
+	ORDER BY SUM(order_profits) DESC
+	LIMIT 1
+
+6. What’s the average annual profit for that city across all years in that city?
+	
+	SELECT SUM(order_profits) / (SELECT COUNT(DISTINCT SUBSTR(order_date, -4))
+				     FROM orders
+				     JOIN order_details ON orders.order_id = order_details.order_id
+				     WHERE shipping_city LIKE 'Lebanon')
+	FROM orders
+	JOIN order_details ON orders.order_id = order_details.order_id
+	WHERE shipping_city LIKE 'Lebanon'
+
+7. What is the distribution of customer types in the data?
+
+	SELECT customer_segment, COUNT(customer_id)
+	FROM customers
+	GROUP BY customer_segment
+
+8. What’s the most profitable product category on average in Iowa across all years?
+
+	SELECT SUBSTR(shipping_date, -4) year, product_category, SUM(order_profits) tot_prof
+	FROM order_details
+	JOIN orders ON order_details.order_id = orders.order_id
+	JOIN product ON order_details.product_id = product.product_id
+	WHERE shipping_state LIKE 'Iowa'
+	GROUP BY product_category
+	ORDER BY tot_prof DESC
+
+9. What is the most popular product in that category across all states in 2016?
+
+	SELECT product_name, SUM(quantity) val
+	FROM orders
+	JOIN order_details ON orders.order_id = order_details.order_id
+	JOIN product ON order_details.product_id = product.product_id
+	WHERE order_date LIKE '%2016' AND product_category LIKE 'Furniture'
+	GROUP BY product.product_id
+	ORDER BY val DESC
+	LIMIT 1
+
+10. Which customer got the most discount in the data? (in total amount)
+
+	SELECT orders.customer_id, SUM(order_sales * order_discount) abzuege
+	FROM order_details
+	JOIN orders ON order_details.order_id = orders.order_id
+	JOIN customers ON orders.customer_id = customers.customer_id
+	GROUP BY orders.customer_id
+	ORDER BY abzuege DESC
+	LIMIT 1
+
+11. How widely did monthly profits vary in 2018?
+
+	WITH dates AS (SELECT order_id, Substr(order_date, Instr(order_date, "/") + 1,
+                      	      Length(order_date) - 5 - Instr(order_date, "/")) AS day,
+                      	      Substr(order_date, 0, Instr(order_date, "/"))       month,
+                      	      Substr(order_date, -4)                              year
+		       FROM   orders)
+
+	SELECT month, SUM(order_profits) month_vals
+	FROM orders
+	JOIN dates ON orders.order_id = dates.order_id
+	JOIN order_details ON orders.order_id = order_details.order_id
+	WHERE year LIKE '2018'
+	GROUP BY month
+	ORDER BY month
+
+12. Which order was the highest in 2015?
+
+	SELECT orders.order_id, order_sales 
+	FROM order_details
+	JOIN orders ON order_details.order_id = orders.order_id
+	WHERE orders.order_date LIKE '%2015'
+	ORDER BY order_sales DESC
+
+13. What was the rank of each city in the East region in 2015?
+	
+	SELECT shipping_city, SUM(quantity)
+	FROM orders
+	JOIN order_details ON orders.order_id = order_details.order_id
+	WHERE order_date LIKE '%2015' AND shipping_region LIKE 'East'
+	GROUP BY shipping_city
+	ORDER BY SUM(quantity) DESC
+
+14. Join all DB tables into one dataset that includes all unique columns and download it as a csv file. In the second part of the project, you're gonna work with this one table.
+
+	SELECT * 
+	FROM orders
+	JOIN order_details ON orders.order_id = order_details.order_id
+	JOIN customers ON orders.customer_id = customers.customer_id
+	JOIN product ON order_details.product_id = product.product_id

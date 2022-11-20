@@ -1,0 +1,22 @@
+P1:
+Our plan was to first look at the overall situation and derive any interesting local factors. To do this, we first took an overview of the profit in the individual states.
+Here it is noticeable that the profit is distributed very differently across the individual states.
+For example, there are states such as California or New York that have brought in very high profits; in other states, such as Texas or Illinois, there are sometimes horrendous losses. Since Texas has suffered the highest loss in total in 2018, let's focus on this as an example. 
+
+P2:
+On this dashboard, we see an overview of how Texas' profit and loss break down over time.
+On the left-hand side, you can see that the Technology category shown in red is the only one that has been able to make a profit at all in the last four years. To take a closer look at the individual categories, we have plotted the profits or losses of the individual categories in the right half in a somewhat finer temporal structure together with a linear forecast for the year 2019.
+Here we can see that the Furniture and Office Supplies categories have hardly made any gains, and if they have, then only minimal ones, while the Technology segment - also in the forecast - certainly has the potential to bring in stable profits. When investigating what could be the reason for this, we looked at the discounts and found the following.
+
+P3:
+If we look at the left side of this figure, we immediately see that the average discount over the entire course of the records is extremely high in the two unsuccessful categories Furniture and Office Supplies, at approx. 40%, while it is only half as high in Technology.
+Because we subsequently wanted to know whether this local circumstance allowed us to draw conclusions about the global situation, we looked globally at the correlation between average discount and total profit or loss, and the results can be seen here on the right side.
+Above we see the average discount in each state and it is noticeable that 10 states have particularly high values here and 9 of these 10 are exactly the states that made loss in 2018. For illustrative purposes, we have highlighted these 9 states in orange.
+In addition, we have made a scatter plot to again illustrate the relationship between discount and profit in a different way. Even taking into account three obvious outliers, we found a very strong correlation with a p-value of .007. The trend line indicates losses for discounts above about 18%, which is in first approximation with the available data.
+
+P4:
+The approach that the average discount has a direct influence on the profit is interesting and should be pursued further. For this reason, we also looked at the same scatterplot again with the breakdown of the different categories and again found a strong correlation. The result can be seen in this figure on the right. On the left, for comparison, is once again the figure from the previous slide without the category split. Based on these results, the conclusion is as follows:
+
+In order to achieve a better overall result with regard to the next accounting period, sales should pay attention to getting a grip on discounts, especially in the states affected by losses. If this is not possible without a drop in sales, then, with regard to the overall result, consideration should be given to scaling back sales in the affected states or categories or focusing more on other categories, such as the technology sector in Texas. 
+
+This analysis does not yet show whether the discount is the only factor with such a strong influence on profit. Accordingly, further research should be done to compare the different markets. For example, one could investigate a difference between large and small customers or purchase quantities, or whether there are conspicuous products that perform very strongly or weakly overall.
